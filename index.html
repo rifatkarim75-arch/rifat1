@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Anniversary Surprise 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: #ffe6f0;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .page { display: none; padding: 40px; }
+    .active { display: block; }
+
+    h1 {
+      font-family: 'Bubblegum Sans', cursive;
+      font-size: 3em;
+      color: #ff4d88;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-family: 'Pacifico', cursive;
+      color: #ff6699;
+    }
+    button {
+      padding: 12px 24px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #ff6699;
+      color: white;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    button:hover { background: #ff3366; }
+
+    /* Balloon animation */
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 60px;
+      height: 80px;
+      background: #ff99cc;
+      border-radius: 50%;
+      animation: float 6s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-120vh); }
+    }
+
+    /* Half box */
+    .half-box {
+      border: 3px solid #ff99cc;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      background: #fff0f5;
+      font-family: 'Caveat', cursive;
+      font-size: 1.2em;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .photo-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.1);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+    .photo-card:hover { transform: scale(1.05); }
+    .photo-card img { width: 100%; display: block; }
+    .story {
+      display: none;
+      padding: 12px;
+      font-family: 'Caveat', cursive;
+      color: #444;
+    }
+    .photo-card.active .story { display: block; }
+
+    /* Floating corner photos */
+    .floating {
+      position: absolute;
+      width: 120px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.2);
+      animation: drift 15s ease-in-out infinite alternate;
+    }
+    .corner1 { top: 5%; left: 5%; animation-delay: 0s; }
+    .corner2 { top: 10%; right: 5%; animation-delay: 5s; }
+    .corner3 { bottom: 10%; left: 10%; animation-delay: -5s; }
+
+    @keyframes drift {
+      0%   { transform: translate(0,0) rotate(0deg); }
+      50%  { transform: translate(20px, -20px) rotate(5deg); }
+      100% { transform: translate(-20px, 20px) rotate(-5deg); }
+    }
+
+    /* Arrow */
+    .arrow {
+      font-size: 2em;
+      cursor: pointer;
+      margin-top: 20px;
+      animation: bounce 1s infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Adjusted photo sizes */
+    .anniversary-pic {
+      width: 180px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .letter-pic {
+      width: 160px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .letter-box {
+      background: #fff;
+      border: 3px solid #ff6699;
+      border-radius: 20px;
+      padding: 30px;
+      margin: 20px auto;
+      max-width: 700px;
+      min-height: 300px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.3em;
+      text-align: left;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page 1 -->
+<div id="page1" class="page active">
+  <h1>Do you want to know what's inside it?</h1>
+  <button onclick="noChoice()">No</button>
+  <button onclick="yesChoice()">Yes</button>
+</div>
+
+<!-- Page 2 -->
+<div id="page2" class="page">
+  <h1>🎈 Surprise Loading 🎈</h1>
+  <div id="balloons"></div>
+  <h2 id="countdown">3</h2>
+</div>
+
+<!-- Page 3 -->
+<div id="page3" class="page" style="background:#ffe6f0; position:relative;">
+  <div style="position:absolute; top:10px; left:0; width:100%; font-size:2em; color:red; opacity:0.3;">
+    ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️ ❤️
+  </div>
+  <img src="1000023302.jpg" alt="Anniversary Photo" class="anniversary-pic">
+  <h1>Happy Anniversary!</h1>
+  <h2>Every moment with you is a blessing ❤️</h2>
+  <div class="half-box">
+    <h3>Our Beautiful Journey Together</h3>
+    <div id="counter" style="font-size:2em; color:#ff3366;">0</div>
+    <p>Beautiful Days Together</p>
+    <p id="message">Every single day has been a blessing. From our first hello to today, each moment with you has been magical. Here's to countless more days filled with love, laughter, and beautiful memories!</p>
+  </div>
+  <div class="arrow" onclick="showPage(4)">⬇️</div>
+</div>
+
+<!-- Page 4 -->
+<div id="page4" class="page">
+  <h1>Our Precious Moments</h1>
+  <div class="gallery">
+    <div class="photo-card">
+      <img src="1000023301.jpg" alt="Memory 1">
+      <div class="story">Our first couple pic</div>
+    </div>
+    <div class="photo-card">
+      <img src="1000023306.jpg" alt="Memory 2">
+      <div class="story">Our first late night date</div>
+    </div>
+    <div class="photo-card">
+      <img src="1000023298.jpg" alt="Memory 3">
+      <div class="story">Our first long drive date</div>
+    </div>
+    <div class="photo-card">
+      <img src="1000023300.jpg" alt="Memory 4">
+      <div class="story">Our first movie date</div>
+    </div>
+  </div>
+  <img src="1000023303.jpg" class="floating corner1">
+  <img src="1000023307.jpg" class="floating corner2">
+  <img src="1000023304.jpg" class="floating corner3">
+  <div class="arrow" onclick="showPage(5)">⬇️</div>
+</div>
+
+<!-- Page 5 -->
+<div id="page5" class="page">
+  <h1>A Letter From My Heart</h1>
+  <img src="1000023299.jpg" alt="Letter Photo" class="letter-pic">
+  <div class="letter-box">
+    <p>Dear Love,</p>
+    <p>This journey with you has been the most beautiful adventure of my life. Every moment spent with you feels like a blessing, and I cherish each day we've been together.</p>
+    <p>From our first meeting to today, you've filled my life with joy, laughter, and unconditional love. Your smile brightens my darkest days, and your love gives me strength when I need it most.</p>
+    <p>As we celebrate another year together, I want you to know that my love for you grows stronger with each passing day. You are my best friend, my confidant, and my soulmate.</p>
+    <p>Happy Anniversary, my love! Here's to many more years of creating beautiful memories together.</p>
+    <p style="text-align:right;">With all my heart,<br>Me</p>
+  </div>
+</div>
+
+<script>
+  function showPage(n) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page'+n).classList.add('active');
+  }
+
+  function noChoice() {
+    // Blast effect
+    document.body.style.backgroundColor = '#ff0000';
+    document.body.style.transition = 'background-color 0.3s ease';
+    setTimeout(() => {
+      alert("💥 Boom! Try again…");
+      document.body.style.backgroundColor = '#ffe6f0'; // reset
+      showPage(1);
+    }, 500);
+  }
+
+  function yesChoice() {
+    showPage(2);
+
+    // Balloons
+    for (let i = 0; i < 20; i++) {
+      let b = document.createElement('div');
+      b.className = 'balloon';
+      b.style.left = Math.random() * 100 + 'vw';
+      b.style.background = ['#ff99cc', '#ff6699', '#ffccff'][Math.floor(Math.random() * 3)];
+      b.style.animationDuration = (4 + Math.random() * 4) + 's';
+      document.getElementById('balloons').appendChild(b);
+    }
+
+    // Countdown
+    let count = 3;
+    let cd = document.getElementById('countdown');
+    let interval = setInterval(() => {
+      count--;
+      cd.textContent = count;
+      if (count === 0) {
+        clearInterval(interval);
+        showPage(3);
+        startCounter();
+      }
+    }, 1000);
+  }
+
+  function startCounter(){
+    let i = 0;
+    let target = 730;
+    let counter = document.getElementById('counter');
+    let interval = setInterval(() => {
+      i++;
+      counter.textContent = i;
+      if (i >= target) clearInterval(interval);
+    }, 10);
+  }
+
+  // Toggle gallery stories
+  document.querySelectorAll('.photo-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('active');
+    });
+  });
+</script>
+
+</body>
+</html>
